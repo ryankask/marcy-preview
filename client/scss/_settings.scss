@@ -1,0 +1,28 @@
+$blue-light: #eaebee;
+$grey-light: #dee3eb;
+$grey-dark: #455268;
+$pink: #cc6666;
+
+$container-width: rem-calc(760);
+
+$base-font-size: $rem-base;
+
+$body-background-color: $grey-light;
+$body-font-family: "Quattrocento Sans", sans-serif;
+$body-text-color: $grey-dark;
+$body-line-height: 1.6;
+
+$heading-font-family: $body-font-family;
+$heading-color: $body-text-color;
+$heading-line-height: 1.4;
+$h1-font-size: rem-calc(44);
+$h2-font-size: rem-calc(37);
+$h3-font-size: rem-calc(27);
+$h4-font-size: rem-calc(23);
+$h5-font-size: rem-calc(18);
+$h6-font-size: 1rem;
+
+$link-color: $pink;
+
+$logo-font-size: $h4-font-size;
+$logo-color: $blue-light;

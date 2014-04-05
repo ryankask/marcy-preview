@@ -1,0 +1,35 @@
+{
+  "name": "marcy",
+  "version": "0.1.0",
+  "description": "Powers my personal website.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ryankask/marcy.git"
+  },
+  "author": "Ryan Kaskel <dev@ryankaskel.com> (https://ryankaskel.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ryankask/marcy/issues"
+  },
+  "homepage": "https://github.com/ryankask/marcy",
+  "devDependencies": {
+    "gulp": "^3.6.0",
+    "gulp-sass": "^0.7.1",
+    "gulp-browserify": "^0.5.0",
+    "gulp-nodemon": "^1.0.2",
+    "reactify": "^0.10.0",
+    "gulp-rename": "^1.2.0",
+    "gulp-plumber": "^0.5.6",
+    "gulp-util": "^2.2.14"
+  },
+  "dependencies": {
+    "node-static": "^0.7.3",
+    "envify": "^1.2.1",
+    "react": "^0.10.0",
+    "node-jsx": "^0.10.0"
+  }
+}

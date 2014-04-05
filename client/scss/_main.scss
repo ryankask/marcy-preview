@@ -1,0 +1,22 @@
+*, *:before, *:after {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.container {
+  width: $container-width;
+  margin: 0 auto;
+}
+
+header {
+  background-color: $grey-dark;
+  margin-bottom: 1rem;
+
+  h1 {
+    color: $logo-color;
+    font-size: $logo-font-size;
+    padding: 0.3rem 0;
+    margin: 0;
+  }
+}
