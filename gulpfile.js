@@ -3,7 +3,6 @@ var gutil = require('gulp-util');
 var sass = require('gulp-sass');
 var rename = require('gulp-rename');
 var browserify = require('gulp-browserify');
-var plumber = require('gulp-plumber');
 var nodemon = require('gulp-nodemon');
 var nodeEnv = process.env.NODE_ENV || 'development';
 
@@ -25,10 +24,9 @@ gulp.task('scripts', function() {
   };
 
   return gulp.src('client/js/app.js')
-    .pipe(plumber())
     .pipe(browserify(browserifyOptions))
+    .on('error', gutil.log)
     .pipe(gulp.dest('public/js'))
-    .on('error', gutil.log);
 });
 
 gulp.task('server', function() {
