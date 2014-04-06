@@ -7,11 +7,27 @@ var nodeJsx = require('node-jsx').install()
 var App = require('../client/js/app');
 var fileExtRegEx = /\.\w+$/;
 
+function formatPage(componentAsString) {
+  return (
+    '<html>' +
+    '<head>' +
+      '<link rel="stylesheet" href="/css/app.min.css" />' +
+      '<link href="http://fonts.googleapis.com/css?family=Quattrocento+Sans:400,700,400italic,700italic" rel="stylesheet" type="text/css" />' +
+    '</head>' +
+    '<body>' +
+      componentAsString +
+      '<script src="/js/app.js"></script>' +
+    '</body>' +
+    '</html>'
+  );
+}
+
 function renderApp(req, res) {
   res.writeHead(200, {
     'Content-Type': 'text/html'
   });
-  res.end(React.renderComponentToString(App()));
+  appHtml = React.renderComponentToString(App());
+  res.end(formatPage(appHtml));
 }
 
 var server = http.createServer(function(req, res) {

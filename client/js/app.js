@@ -43,18 +43,11 @@ var Footer = React.createClass({
 var App = React.createClass({
   render: function() {
     return (
-      <html>
-        <head>
-          <link rel="stylesheet" href="/css/app.min.css" />
-          <link href="http://fonts.googleapis.com/css?family=Quattrocento+Sans:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
-          <script src="/js/app.js"></script>
-        </head>
-        <body>
-          <Header />
-          <Main ready={this.props.ready} />
-          <Footer />
-       </body>
-      </html>
+      <div id="app">
+        <Header />
+        <Main ready={this.props.ready} />
+        <Footer />
+      </div>
     );
   }
 });
@@ -63,6 +56,6 @@ module.exports = App;
 
 if (typeof window !== 'undefined') {
   window.onload = function() {
-    React.renderComponent(<App ready="true" />, document);
+    React.renderComponent(<App ready="true" />, document.body);
   }
 }
