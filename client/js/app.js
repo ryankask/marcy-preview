@@ -18,10 +18,13 @@ var Header = React.createClass({
 
 var Main = React.createClass({
   render: function() {
+    var host = this.props.host;
+    var ready = this.props.ready;
+
     return (
       <main>
         <div className="container">
-          <PostList ready={this.props.ready} source="/data/posts.json" />
+          <PostList host={host} ready={ready} source="/data/posts.json" />
         </div>
       </main>
     );
@@ -41,6 +44,12 @@ var Footer = React.createClass({
 });
 
 var App = React.createClass({
+  getDefaultProps: function() {
+    return {
+      host: '',
+      ready: false
+    }
+  },
   render: function() {
     return (
       <html>
@@ -51,7 +60,7 @@ var App = React.createClass({
         </head>
         <body>
           <Header />
-          <Main ready={this.props.ready} />
+          <Main host={this.props.host} ready={this.props.ready} />
           <Footer />
        </body>
       </html>
@@ -63,6 +72,6 @@ module.exports = App;
 
 if (typeof window !== 'undefined') {
   window.onload = function() {
-    React.renderComponent(<App ready="true" />, document);
+    React.renderComponent(<App host="" ready="true" />, document);
   }
 }

@@ -3,6 +3,7 @@
 var fs = require('fs');
 var path = require('path');
 var React = require('react');
+var ReactAsync = require('react-async');
 var request = require('superagent');
 var marked = require('marked');
 var highlight = require('highlight.js');
@@ -49,19 +50,23 @@ var Post = React.createClass({
 });
 
 var PostList = React.createClass({
-  getInitialState: function() {
-    return {
-      posts: []
-    };
+  mixins: [ReactAsync.Mixin],
+  getInitialStateAsync: function(cb) {
+    this.loadPosts(cb);
   },
-  componentWillMount: function() {
-    if (this.props.ready) {
-      this.loadPosts();
+  loadPosts: function(cb) {
+    var source = this.props.source;
+
+    if (!this.props.ready && this.props.host) {
+      source = 'http://' + this.props.host + source;
     }
-  },
-  loadPosts: function() {
-    request.get(this.props.source, function (res) {
-      this.setState({ posts: res.body.reverse() });
+
+    request.get(source, function (res) {
+      if (res.ok) {
+        cb(null, { posts: res.body.reverse() });
+      } else {
+        cb(res.text, null);
+      }
     }.bind(this));
   },
   render: function() {

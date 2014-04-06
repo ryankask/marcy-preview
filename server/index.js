@@ -2,16 +2,28 @@ var http = require('http');
 var url = require('url');
 var staticServer = require('node-static');
 var staticFiles = new staticServer.Server('./public');
-var React = require('react');
+var ReactAsync = require('react-async');
 var nodeJsx = require('node-jsx').install()
 var App = require('../client/js/app');
 var fileExtRegEx = /\.\w+$/;
 
 function renderApp(req, res) {
-  res.writeHead(200, {
-    'Content-Type': 'text/html'
+  var app = App({ host: req.headers.host, ready: false });
+
+  ReactAsync.renderComponentToStringWithAsyncState(app, function(err, markup) {
+    if (err) {
+      res.writeHead(500);
+      var message = '<h1>Server error.</h1>';
+
+      if (process.env.NODE_ENV !== 'production') {
+        message += '<p>' + JSON.stringify(err.stack) + '</p>';
+      }
+
+      return res.end(message);
+    }
+    res.writeHead(200, { 'Content-Type': 'text/html' });
+    res.end(markup);
   });
-  res.end(React.renderComponentToString(App()));
 }
 
 var server = http.createServer(function(req, res) {
