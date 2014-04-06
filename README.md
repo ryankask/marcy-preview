@@ -1,7 +1,7 @@
 marcy
 =====
 
-Marcy is an experimental version of [esther](https://github.com/ryankask/esther).
+Marcy is an experimental version of [esther](https://github.com/ryankask/esther),
 the app the powers my [blog on ryankaskel.com](https://ryankaskel.com/).
 
 It uses [Node](http://nodejs.org/) and
