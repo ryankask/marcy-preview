@@ -54,14 +54,19 @@ var App = React.createClass({
     return (
       <html>
         <head>
+          <meta charSet="utf-8" />
+          <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+          <title>Marcy</title>
+          <meta name="description" content="" />
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
           <link rel="stylesheet" href="/css/app.min.css" />
           <link href="http://fonts.googleapis.com/css?family=Quattrocento+Sans:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
-          <script src="/js/app.js"></script>
         </head>
         <body>
           <Header />
           <Main host={this.props.host} ready={this.props.ready} />
           <Footer />
+          <script src="/js/app.js"></script>
        </body>
       </html>
     );
