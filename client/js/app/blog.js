@@ -70,7 +70,6 @@ var PostList = React.createClass({
       if (res.ok) {
         cb(null, { posts: res.body.reverse() });
       } else {
-        console.log('something');
         cb(res.text, null);
       }
     }.bind(this));

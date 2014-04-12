@@ -15,7 +15,7 @@ App.render = function() {
       path: this.path
     }
   });
-  console.log(this.path);
+
   if (this.isServer) {
     var render = Promise.promisify(require('react-async').renderComponentToStringWithAsyncState);
     return render(root).then(function(result) {
