@@ -2,27 +2,23 @@ var http = require('http');
 var url = require('url');
 var staticServer = require('node-static');
 var staticFiles = new staticServer.Server('./public');
-var ReactAsync = require('react-async');
-var nodeJsx = require('node-jsx').install()
+var nodeJsx = require('node-jsx').install();
 var App = require('../client/js/app');
 var fileExtRegEx = /\.\w+$/;
 
 function renderApp(req, res) {
-  var app = App({ host: req.headers.host, ready: false });
+  var headers = { 'Content-Type': 'text/html' };
 
-  ReactAsync.renderComponentToStringWithAsyncState(app, function(err, markup) {
-    if (err) {
-      res.writeHead(500);
-      var message = '<h1>Server error.</h1>';
-
-      if (process.env.NODE_ENV !== 'production') {
-        message += '<p>' + JSON.stringify(err.stack) + '</p>';
-      }
-
-      return res.end(message);
-    }
-    res.writeHead(200, { 'Content-Type': 'text/html' });
+  App.init({ path: req.url }).render().then(function(markup) {
+    res.writeHead(200, headers);
     res.end(markup);
+  }).error(function(err) {
+    res.writeHead(500, headers);
+    var message = '<h1>Server error.</h1>';
+    if (process.env.NODE_ENV !== 'production') {
+      message += '<p>' + JSON.stringify(err.stack) + '</p>';
+    }
+    res.end(message);
   });
 }
 

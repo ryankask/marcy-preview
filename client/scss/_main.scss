@@ -19,5 +19,10 @@ header {
     font-size: $logo-font-size;
     padding: 0.3rem 0;
     margin: 0;
+
+    a {
+      color: $logo-color;
+      text-decoration: none;
+    }
   }
 }

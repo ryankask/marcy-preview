@@ -23,7 +23,7 @@ gulp.task('scripts', function() {
     debug: nodeEnv !== 'production'
   };
 
-  return gulp.src('client/js/app.js')
+  return gulp.src('client/js/bootstrap.js')
     .pipe(browserify(browserifyOptions))
     .on('error', gutil.log)
     .pipe(gulp.dest('public/js'))

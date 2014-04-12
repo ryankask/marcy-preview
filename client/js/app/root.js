@@ -1,15 +1,19 @@
 /** @jsx React.DOM */
 
 var React = require('react');
+var Router = require('react-router-component');
+var CaptureClicks = require('react-router-component/lib/CaptureClicks')
+var Locations = Router.Locations;
+var Location = Router.Location;
+var Pages = require('./pages');
 var Blog = require('./blog');
-var PostList = Blog.PostList;
 
 var Header = React.createClass({
   render: function() {
     return (
       <header>
         <div className="container">
-          <h1>ryankaskel.com</h1>
+          <h1><a href="/">ryankaskel.com</a></h1>
         </div>
       </header>
     );
@@ -18,14 +22,14 @@ var Header = React.createClass({
 
 var Main = React.createClass({
   render: function() {
-    var host = this.props.host;
-    var ready = this.props.ready;
-
     return (
       <main>
-        <div className="container">
-          <PostList host={host} ready={ready} source="/data/posts.json" />
-        </div>
+        <Locations path={this.props.location.path}>
+          <Location path="/" handler={Blog.PostList} />
+          <Location path="/blog/:slug" handler={Blog.Post} />
+          <Location path="/about" handler={Pages.About} />
+          <Location path="/contact" handler={Pages.Contact} />
+        </Locations>
       </main>
     );
   }
@@ -43,13 +47,7 @@ var Footer = React.createClass({
   }
 });
 
-var App = React.createClass({
-  getDefaultProps: function() {
-    return {
-      host: '',
-      ready: false
-    }
-  },
+var Root = React.createClass({
   render: function() {
     return (
       <html>
@@ -63,20 +61,16 @@ var App = React.createClass({
           <link href="http://fonts.googleapis.com/css?family=Quattrocento+Sans:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
         </head>
         <body>
-          <Header />
-          <Main host={this.props.host} ready={this.props.ready} />
-          <Footer />
-          <script src="/js/app.js"></script>
+          <CaptureClicks>
+            <Header />
+            <Main location={this.props.location} />
+            <Footer />
+            <script src="/js/bootstrap.js"></script>
+          </CaptureClicks>
        </body>
       </html>
     );
   }
 });
 
-module.exports = App;
-
-if (typeof window !== 'undefined') {
-  window.onload = function() {
-    React.renderComponent(<App host="" ready="true" />, document);
-  }
-}
+module.exports = Root;

@@ -37,15 +37,24 @@ var Post = React.createClass({
     this.setState({ bodyHtml: marked(this.props.data.body) });
   },
   render: function() {
-    var post = this.props.data;
-    var bodyHtml = this.state.bodyHtml;
+    if (this.props.slug) {
+      return (
+        <article className="container"><h1>Coming Soon</h1></article>
+      );
+    } else {
+      var post = this.props.data;
+      post.url = '/blog/' + post.slug;
+      var bodyHtml = this.state.bodyHtml;
 
-    return (
-      <article>
-        <h1>{post.title}</h1>
-        <div dangerouslySetInnerHTML={{__html: bodyHtml }} />
-      </article>
-    );
+      return (
+        <article>
+          <h1>
+            <a href={post.url}>{post.title}</a>
+          </h1>
+          <div dangerouslySetInnerHTML={{__html: bodyHtml }} />
+        </article>
+      );
+    }
   }
 });
 
@@ -55,30 +64,29 @@ var PostList = React.createClass({
     this.loadPosts(cb);
   },
   loadPosts: function(cb) {
-    var source = this.props.source;
-
-    if (!this.props.ready && this.props.host) {
-      source = 'http://' + this.props.host + source;
-    }
+    var source = 'http://localhost:3000/data/posts.json';
 
     request.get(source, function (res) {
       if (res.ok) {
         cb(null, { posts: res.body.reverse() });
       } else {
+        console.log('something');
         cb(res.text, null);
       }
     }.bind(this));
   },
   render: function() {
-    var posts = this.state.posts.map(function(post) {
+    var posts = (this.state.posts || []).map(function (post) {
       return <Post key={post.id} data={post} />;
     });
+
     return (
-      <div className="posts">
+      <div className="container posts">
         {posts}
       </div>
     );
   }
 });
 
+exports.Post = Post;
 exports.PostList = PostList;
