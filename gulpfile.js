@@ -2,7 +2,8 @@ var gulp = require('gulp');
 var gutil = require('gulp-util');
 var sass = require('gulp-sass');
 var rename = require('gulp-rename');
-var browserify = require('gulp-browserify');
+var source = require('vinyl-source-stream');
+var browserify = require('browserify');
 var nodemon = require('gulp-nodemon');
 var nodeEnv = process.env.NODE_ENV || 'development';
 
@@ -18,21 +19,23 @@ gulp.task('styles', function() {
 });
 
 gulp.task('scripts', function() {
-  var browserifyOptions = {
-    transform: ['reactify'],
+  var bundleOpts = {
     debug: nodeEnv !== 'production'
+    //standalone: 'noscope'
   };
 
-  return gulp.src('client/js/bootstrap.js')
-    .pipe(browserify(browserifyOptions))
+  return browserify('./client/js/bootstrap.js')
+    .transform('reactify')
+    .bundle(bundleOpts)
     .on('error', gutil.log)
+    .pipe(source('bootstrap.js'))
     .pipe(gulp.dest('public/js'))
 });
 
 gulp.task('server', function() {
   nodemon({
     script: 'index.js',
-    ignore: ['public'],
+    ignore: ['public', 'gulpfile.js'],
     env: {
       NODE_ENV: nodeEnv
     }
